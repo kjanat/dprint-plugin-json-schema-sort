@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - v[0-9]+.*
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - run: cargo test
+      - name: Build Wasm plugin
+        run: cargo build --profile wasm-release --target wasm32-unknown-unknown
+      - name: Stage release artifact
+        run: cp target/wasm32-unknown-unknown/wasm-release/dprint_plugin_json_schema_sort.wasm plugin.wasm
+      # `plugin.wasm` is the asset plugins.dprint.dev proxies for
+      # `dprint config add kjanat/json-schema-sort`.
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            plugin.wasm
+            deployment/schema.json
