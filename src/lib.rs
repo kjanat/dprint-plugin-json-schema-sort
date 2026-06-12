@@ -156,7 +156,7 @@ mod wasm_plugin {
                 config_key: "jsonSchemaSort".to_string(),
                 help_url: "https://github.com/kjanat/dprint-plugin-json-schema-sort".to_string(),
                 config_schema_url: format!(
-                    "https://plugins.dprint.dev/kjanat/json-schema-sort/v{version}/schema.json"
+                    "https://plugins.dprint.dev/kjanat/json-schema-sort/{version}/schema.json"
                 ),
                 update_url: None,
             }
