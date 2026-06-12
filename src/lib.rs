@@ -131,8 +131,12 @@ mod wasm_plugin {
                 config: result.config,
                 diagnostics: result.diagnostics,
                 file_matching: FileMatchingInfo {
-                    file_extensions: vec!["json".to_string()],
-                    file_names: vec![],
+                    // Don't claim every `.json` (that would collide with
+                    // dprint-plugin-json). Auto-handle the conventional bare
+                    // `schema.json`; anything else (`*.schema.json`, schema
+                    // dirs) is opt-in via `associations` in dprint.json.
+                    file_extensions: vec![],
+                    file_names: vec!["schema.json".to_string()],
                 },
             }
         }

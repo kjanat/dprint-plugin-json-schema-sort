@@ -20,15 +20,26 @@ can also pin the full URL:
 dprint config add https://github.com/kjanat/dprint-plugin-json-schema-sort/releases/latest/download/plugin.wasm
 ```
 
-Because dprint associates one plugin per file extension, scope it to schema
-files with an `associations` entry in `dprint.json`:
+## Which files it formats
+
+dprint runs exactly one plugin per file. By default this plugin only claims
+files **named exactly `schema.json`** — it deliberately does not claim every
+`.json` (that would collide with `dprint-plugin-json` and reorder unrelated
+files like `package.json`). So out of the box, with no extra config, bare
+`schema.json` files are sorted and everything else is left to the JSON plugin.
+
+To cover schemas with other names (`product.schema.json`) or in a known
+directory, add an `associations` glob — associations take precedence over the
+built-in matching, so the listed files route to this plugin:
 
 ```jsonc
 {
   "json": {},
   "jsonSchemaSort": {},
+  // Optional — widen beyond the default bare `schema.json`:
   "associations": {
-    "jsonSchemaSort": ["**/*.schema.json", "**/schema.json"]
+    "jsonSchemaSort": ["**/schema.json", "**/*.schema.json"]
+    // or by location: ["schemas/**/*.json"]
   },
   "plugins": [
     "https://plugins.dprint.dev/json-x.x.x.wasm",
@@ -36,6 +47,9 @@ files with an `associations` entry in `dprint.json`:
   ]
 }
 ```
+
+Note: a file routed to this plugin is sorted and re-emitted as 2-space JSON; it
+does not also pass through `dprint-plugin-json`'s whitespace config.
 
 ## Configuration
 
