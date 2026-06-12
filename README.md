@@ -10,14 +10,14 @@ library. It sorts keys; it does not reformat whitespace — pair it with
 ## Install
 
 ```sh
-dprint config add kjanat/json-schema-sort
+dprint add kjanat/json-schema-sort
 ```
 
 This resolves to this repository's latest release via plugins.dprint.dev. You
 can also pin the full URL:
 
 ```sh
-dprint config add https://github.com/kjanat/dprint-plugin-json-schema-sort/releases/latest/download/plugin.wasm
+dprint add https://github.com/kjanat/dprint-plugin-json-schema-sort/releases/latest/download/plugin.wasm
 ```
 
 ## Which files it formats
@@ -35,10 +35,10 @@ built-in matching, so the listed files route to this plugin:
 ```jsonc
 {
   "json": {},
-  "jsonSchemaSort": {},
-  // Optional — widen beyond the default bare `schema.json`:
-  "associations": {
-    "jsonSchemaSort": ["**/schema.json", "**/*.schema.json"]
+  "jsonSchemaSort": {
+    // Optional — widen beyond the default bare `schema.json`.
+    // `associations` nests inside the plugin's own config as an array.
+    "associations": ["**/schema.json", "**/*.schema.json"]
     // or by location: ["schemas/**/*.json"]
   },
   "plugins": [
