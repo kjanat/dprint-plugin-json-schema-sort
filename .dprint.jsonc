@@ -1,0 +1,25 @@
+{
+  "extends": "https://github.com/kjanat/kjanat/raw/886a886/configs/dprint.remote.json",
+  "excludes": ["**/*fixtures*/**", "**/*snapshots*/**"],
+  "markdown": {
+    "lineWidth": 120,
+    "textWrap": "always",
+  },
+  "json": {
+    "useTabs": false,
+  },
+  "jsonSchemaSort": {
+    "associations": ["**/schema.json", "**/*.schema.json"],
+  },
+  "exec": {
+    "commands": [{
+      "command": "tombi format - --stdin-filename {{file_path}}",
+      "exts": ["toml"],
+      "cacheKeyFiles": ["tombi.toml"],
+    }],
+  },
+  "plugins": [
+    "https://plugins.dprint.dev/exec-0.6.2.json@df98f54ffd3092b8a841aedd6d098a2651f16d0a796a40535774f1a8b4b9d463",
+    "target/wasm32-unknown-unknown/wasm-release/dprint_plugin_json_schema_sort.wasm",
+  ],
+}

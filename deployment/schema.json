@@ -1,19 +1,19 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://plugins.dprint.dev/kjanat/json-schema-sort/0.1.0/schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "dprint json-schema-sort plugin configuration",
   "description": "All fields are optional. Sorts JSON Schema documents into a deterministic, schema-aware key order.",
   "type": "object",
   "properties": {
-    "sortArrays": {
-      "description": "Sort schema-safe string arrays such as `required` and `type`.",
-      "type": "boolean",
-      "default": true
-    },
     "preservePropertyOrder": {
       "description": "Keep property and `$defs` names in document order instead of sorting them alphabetically.",
-      "type": "boolean",
-      "default": false
+      "default": false,
+      "type": "boolean"
+    },
+    "sortArrays": {
+      "description": "Sort schema-safe string arrays such as `required` and `type`.",
+      "default": true,
+      "type": "boolean"
     }
   }
 }

@@ -158,7 +158,9 @@ mod wasm_plugin {
                 config_schema_url: format!(
                     "https://plugins.dprint.dev/kjanat/json-schema-sort/{version}/schema.json"
                 ),
-                update_url: None,
+                update_url: Some(
+                    "https://plugins.dprint.dev/kjanat/json-schema-sort/latest.json".to_string(),
+                ),
             }
         }
 
