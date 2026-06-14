@@ -1,6 +1,6 @@
 [package]
 name         = "dprint-plugin-json-schema-sort"
-version      = "0.1.1"
+version      = "0.1.2"
 edition      = "2024"
 rust-version = "1.85"
 description  = "dprint Wasm plugin that deterministically sorts JSON Schema files"
