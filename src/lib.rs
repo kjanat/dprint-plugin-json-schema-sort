@@ -131,10 +131,9 @@ mod wasm_plugin {
                 config: result.config,
                 diagnostics: result.diagnostics,
                 file_matching: FileMatchingInfo {
-                    // Don't claim every `.json` (that would collide with
-                    // dprint-plugin-json). Auto-handle the conventional bare
-                    // `schema.json`; anything else (`*.schema.json`, schema
-                    // dirs) is opt-in via `associations` in dprint.json.
+                    // Don't claim every `.json` (that would collide with dprint-plugin-json).
+                    // Auto-handle the conventional bare `schema.json`; anything else (`*.schema.json`, schema dirs)
+                    // is opt-in via `associations` in dprint.json.
                     file_extensions: vec![],
                     file_names: vec!["schema.json".to_string()],
                 },
@@ -149,18 +148,25 @@ mod wasm_plugin {
         }
 
         fn plugin_info(&mut self) -> PluginInfo {
-            let version = env!("CARGO_PKG_VERSION").to_string();
+            let version = env!("CARGO_PKG_VERSION");
+            // Non-user-facing: the update channel uses the full repo specifier,
+            // derived from the repository URL so it tracks Cargo.toml / renames.
+            let repo_path = env!("CARGO_PKG_REPOSITORY")
+                .strip_prefix("https://github.com/")
+                .expect("CARGO_PKG_REPOSITORY must be a https://github.com/<owner>/<repo> URL");
+            let short_path = repo_path.replace("dprint-plugin-", "");
             PluginInfo {
                 name: env!("CARGO_PKG_NAME").to_string(),
-                version: version.clone(),
+                version: version.to_string(),
                 config_key: "jsonSchemaSort".to_string(),
-                help_url: "https://github.com/kjanat/dprint-plugin-json-schema-sort".to_string(),
+                help_url: env!("CARGO_PKG_REPOSITORY").to_string(),
+                // User-visible: short `json-schema-sort` specifier, matching `$id`.
                 config_schema_url: format!(
-                    "https://plugins.dprint.dev/kjanat/json-schema-sort/{version}/schema.json"
+                    "https://plugins.dprint.dev/{short_path}/{version}/schema.json"
                 ),
-                update_url: Some(
-                    "https://plugins.dprint.dev/kjanat/json-schema-sort/latest.json".to_string(),
-                ),
+                update_url: Some(format!(
+                    "https://plugins.dprint.dev/{repo_path}/latest.json"
+                )),
             }
         }
 
